@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Information Systems Lesson</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Playfair+Display:wght@600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; height: 100%; }
+    body { font-family: 'DM Sans', sans-serif; }
+    .heading-font { font-family: 'Playfair Display', Georgia, serif; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp 0.5s ease-out forwards; opacity: 0; }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+
+    .tab-btn { transition: all 0.25s ease; }
+    .tab-btn.active { background: var(--primary); color: #fff; }
+    .tab-btn:not(.active):hover { background: rgba(15,80,120,0.08); }
+
+    .card-hover { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .card-hover:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+
+    .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+    .accordion-content.open { max-height: 2000px; }
+
+    .quiz-option { transition: all 0.2s ease; cursor: pointer; }
+    .quiz-option:hover { border-color: var(--primary); background: rgba(15,80,120,0.04); }
+    .quiz-option.correct { border-color: #16a34a; background: #f0fdf4; }
+    .quiz-option.wrong { border-color: #dc2626; background: #fef2f2; }
+
+    .progress-fill { transition: width 0.4s ease; }
+
+    :root {
+      --bg: #F4F1EB;
+      --surface: #FFFFFF;
+      --text: #1a2332;
+      --primary: #0F5078;
+      --secondary: #B8860B;
+    }
+
+    .scrollbar-thin::-webkit-scrollbar { width: 6px; }
+    .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+    .scrollbar-thin::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full" style="background: var(--bg); color: var(--text);">
+  <div id="app" class="h-full w-full overflow-auto scrollbar-thin"><!-- Hero -->
+   <header class="w-full px-6 py-12 md:py-20 text-center fade-up" style="background: linear-gradient(135deg, var(--primary) 0%, #0a3a58 100%);">
+    <div class="max-w-3xl mx-auto">
+     <p class="text-sm uppercase tracking-widest mb-3 font-semibold" style="color: var(--secondary);">Comprehensive Lesson</p>
+     <h1 id="mainTitle" class="heading-font text-3xl md:text-5xl font-800 mb-4" style="color: #fff;">Modern Information Systems</h1>
+     <p id="subtitle" class="text-base md:text-lg opacity-90" style="color: #dce8f0;">Collaboration, AI &amp; Automation, Enterprise Systems, and the Philippine ICT Landscape</p>
+    </div>
+   </header><!-- Progress -->
+   <div class="w-full px-6 py-3 sticky top-0 z-30" style="background: var(--surface); border-bottom: 1px solid #e5e0d8;">
+    <div class="max-w-4xl mx-auto flex items-center gap-3"><span class="text-xs font-semibold" style="color: var(--primary);">Progress</span>
+     <div class="flex-1 h-2 rounded-full" style="background: #e5e0d8;">
+      <div id="progressBar" class="h-2 rounded-full progress-fill" style="background: var(--secondary); width: 0%;"></div>
+     </div><span id="progressText" class="text-xs font-semibold" style="color: var(--text);">0%</span>
+    </div>
+   </div><!-- Tab Nav -->
+   <nav class="w-full px-4 pt-6 fade-up delay-1">
+    <div class="max-w-4xl mx-auto flex flex-wrap gap-2 justify-center"><button class="tab-btn active px-4 py-2 rounded-full text-sm font-semibold" data-tab="0"> <span class="hidden sm:inline">📡 </span>Collaboration &amp; Groupware </button> <button class="tab-btn px-4 py-2 rounded-full text-sm font-semibold" data-tab="1"> <span class="hidden sm:inline">🤖 </span>AI, IoT &amp; Big Data </button> <button class="tab-btn px-4 py-2 rounded-full text-sm font-semibold" data-tab="2"> <span class="hidden sm:inline">🏢 </span>ERP, CRM &amp; SCM </button> <button class="tab-btn px-4 py-2 rounded-full text-sm font-semibold" data-tab="3"> <span class="hidden sm:inline">🇵🇭 </span>PH ICT Context </button> <button class="tab-btn px-4 py-2 rounded-full text-sm font-semibold" data-tab="4"> <span class="hidden sm:inline">✅ </span>Quiz </button>
+    </div>
+   </nav><!-- Content Area -->
+   <main class="w-full px-4 py-8">
+    <div class="max-w-4xl mx-auto"><!-- TAB 0: Collaboration & Groupware -->
+     <section id="tab-0" class="tab-content fade-up delay-2">
+      <div class="rounded-2xl p-6 md:p-10 mb-6" style="background: var(--surface);">
+       <h2 class="heading-font text-2xl md:text-3xl font-700 mb-2" style="color: var(--primary);">Collaboration Platforms &amp; Groupware</h2>
+       <p class="mb-6 leading-relaxed" style="color: #555;">Collaboration platforms are digital environments that enable teams to communicate, coordinate, and co-create regardless of location. <strong>Groupware</strong> is the broader category of software designed to help groups of people work together.</p>
+       <div class="grid md:grid-cols-2 gap-4 mb-8">
+        <div class="card-hover rounded-xl p-5 border" style="border-color: #e5e0d8;">
+         <div class="text-2xl mb-2">
+          💬
+         </div>
+         <h3 class="font-bold mb-1" style="color: var(--primary);">Communication Tools</h3>
+         <p class="text-sm" style="color: #666;">Real-time messaging (Slack, MS Teams), video conferencing (Zoom, Google Meet), and email systems that keep teams connected synchronously and asynchronously.</p>
+        </div>
+        <div class="card-hover rounded-xl p-5 border" style="border-color: #e5e0d8;">
+         <div class="text-2xl mb-2">
+          📝
+         </div>
+         <h3 class="font-bold mb-1" style="color: var(--primary);">Co-Authoring &amp; Documents</h3>
+         <p class="text-sm" style="color: #666;">Google Workspace, Microsoft 365, and Notion allow multiple users to simultaneously edit documents, spreadsheets, and presentations in the cloud.</p>
+        </div>
+        <div class="card-hover rounded-xl p-5 border" style="border-color: #e5e0d8;">
+         <div class="text-2xl mb-2">
+          📋
+         </div>
+         <h3 class="font-bold mb-1" style="color: var(--primary);">Project Management</h3>
+         <p class="text-sm" style="color: #666;">Tools like Trello, Asana, Jira, and Monday.com provide task tracking, Kanban boards, Gantt charts, and workflow automation for organizing work.</p>
+        </div>
+        <div class="card-hover rounded-xl p-5 border" style="border-color: #e5e0d8;">
+         <div class="text-2xl mb-2">
+          🗂️
+         </div>
+         <h3 class="font-bold mb-1" style="color: var(--primary);">Knowledge Management</h3>
+         <p class="text-sm" style="color: #666;">Wikis, shared drives (SharePoint, Confluence), and intranets centralize organizational knowledge for easy retrieval and onboarding.</p>
+        </div>
+       </div><!-- Accordion: Groupware Categories -->
+       <h3 class="font-bold text-lg mb-3" style="color: var(--primary);">Types of Groupware by Time &amp; Place</h3>
+       <div class="space-y-2">
+        <div class="accordion border rounded-lg" style="border-color: #e5e0d8;"><button class="accordion-btn w-full flex justify-between items-center p-4 text-left font-semibold text-sm" onclick="toggleAccordion(this)"> Same Time, Same Place (Face-to-Face) <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i> </button>
+         <div class="accordion-content px-4 pb-4 text-sm" style="color: #555;">
+          <p>Electronic meeting systems, shared screens in conference rooms, interactive whiteboards (e.g., SMART Boards). These enhance in-person meetings with digital capabilities like real-time polling, brainstorming, and screen sharing.</p>
+         </div>
+        </div>
+        <div class="accordion border rounded-lg" style="border-color: #e5e0d8;"><button class="accordion-btn w-full flex justify-between items-center p-4 text-left font-semibold text-sm" onclick="toggleAccordion(this)"> Same Time, Different Place (Synchronous Remote) <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i> </button>
+         <div class="accordion-content px-4 pb-4 text-sm" style="color: #555;">
+          <p>Video conferencing (Zoom, Teams), instant messaging, screen sharing, VoIP calls. These tools recreate the immediacy of face-to-face interaction across distances, crucial for distributed teams and remote work setups.</p>
+         </div>
+        </div>
+        <div class="accordion border rounded-lg" style="border-color: #e5e0d8;"><button class="accordion-btn w-full flex justify-between items-center p-4 text-left font-semibold text-sm" onclick="toggleAccordion(this)"> Different Time, Same Place (Asynchronous Co-located) <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i> </button>
+         <div class="accordion-content px-4 pb-4 text-sm" style="color: #555;">
+          <p>Shared workstations with team calendars, shift-handoff systems, bulletin boards. Common in hospitals, factories, and 24/7 operations where teams share physical resources across shifts.</p>
+         </div>
+        </div>
+        <div class="accordion border rounded-lg" style="border-color: #e5e0d8;"><button class="accordion-btn w-full flex justify-between items-center p-4 text-left font-semibold text-sm" onclick="toggleAccordion(this)"> Different Time, Different Place (Asynchronous Remote) <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i> </button>
+         <div class="accordion-content px-4 pb-4 text-sm" style="color: #555;">
+          <p>Email, discussion forums, shared document repositories, version control (GitHub). Most flexible category — enables global collaboration across all time zones. Dominant mode in modern remote-first organizations.</p>
+         </div>
+        </div>
+       </div>
+       <div class="mt-8 p-5 rounded-xl" style="background: linear-gradient(135deg, #f0f7fb, #fdf8ef);">
+        <h4 class="font-bold mb-2" style="color: var(--secondary);">💡 Key Takeaway</h4>
+        <p class="text-sm" style="color: #555;">Effective collaboration platforms integrate multiple groupware categories into unified ecosystems. Microsoft Teams, for example, combines chat, video, file sharing, and project management — covering all four quadrants of the time/place matrix.</p>
+       </div>
+      </div>
+     </section><!-- TAB 1: AI, IoT, Big Data -->
+     <section id="tab-1" class="tab-content hidden fade-up delay-2">
+      <div class="rounded-2xl p-6 md:p-10 mb-6" style="background: var(--surface);">
+       <h2 class="heading-font text-2xl md:text-3xl font-700 mb-2" style="color: var(--primary);">AI, IoT, Automation &amp; Big Data</h2>
+       <p class="mb-6 leading-relaxed" style="color: #555;">These four pillars of modern technology are deeply interrelated and together form the backbone of digital transformation across every industry.</p><!-- AI Section -->
+       <div class="mb-8">
+        <h3 class="font-bold text-xl mb-3 flex items-center gap-2" style="color: var(--primary);"><span class="text-2xl">🧠</span> Artificial Intelligence (AI)</h3>
+        <p class="mb-4 text-sm leading-relaxed" style="color: #555;">AI refers to computer systems capable of performing tasks that normally require human intelligence — learning, reasoning, perception, decision-making, and natural language understanding.</p>
+        <div class="grid md:grid-cols-3 gap-3 mb-4">
+         <div class="p-4 rounded-lg" style="background: #f0f7fb;">
+          <p class="font-bold text-sm mb-1" style="color: var(--primary);">Machine Learning</p>
+          <p class="text-xs" style="color: #666;">Algorithms learn from data to make predictions. Used in recommendation engines (Netflix, Spotify), fraud detection, and medical diagnosis.</p>
+         </div>
+         <div class="p-4 rounded-lg" style="background: #f0f7fb;">
+          <p class="font-bold text-sm mb-1" style="color: var(--primary);">Natural Language Processing</p>
+          <p class="text-xs" style="color: #666;">Enables machines to understand and generate human language. Powers chatbots, translation services, sentiment analysis, and voice assistants.</p>
+         </div>
+         <div class="p-4 rounded-lg" style="background: #f0f7fb;">
+          <p class="font-bold text-sm mb-1" style="color: var(--primary);">Computer Vision</p>
+          <p class="text-xs" style="color: #666;">Processes visual data from cameras and sensors. Used in facial recognition, quality inspection, autonomous vehicles, and medical imaging.</p>
+         </div>
+        </div>
+       </div><!-- IoT Section -->
+       <div class="mb-8">
+        <h3 class="font-bold text-xl mb-3 flex items-center gap-2" style="color: var(--primary);"><span class="text-2xl">📡</span> Internet of Things (IoT)</h3>
+        <p class="mb-4 text-sm leading-relaxed" style="color: #555;">IoT is a network of physical devices embedded with sensors, software, and connectivity that collect and exchange data without human intervention.</p>
+        <div class="p-5 rounded-xl border mb-4" style="border-color: #e5e0d8;">
+         <p class="font-bold text-sm mb-3" style="color: var(--secondary);">IoT Architecture (4 Layers)</p>
+         <div class="space-y-2">
+          <div class="flex items-center gap-3"><span class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background: var(--primary);">1</span>
+           <div>
+            <strong class="text-sm">Perception Layer</strong> <span class="text-xs" style="color: #666;">— Sensors &amp; actuators that collect data (temperature, motion, GPS)</span>
+           </div>
+          </div>
+          <div class="flex items-center gap-3"><span class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background: var(--primary);">2</span>
+           <div>
+            <strong class="text-sm">Network Layer</strong> <span class="text-xs" style="color: #666;">— WiFi, Bluetooth, 5G, LoRaWAN transmit data to the cloud</span>
+           </div>
+          </div>
+          <div class="flex items-center gap-3"><span class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background: var(--primary);">3</span>
+           <div>
+            <strong class="text-sm">Processing Layer</strong> <span class="text-xs" style="color: #666;">— Edge computing &amp; cloud platforms analyze data streams</span>
+           </div>
+          </div>
+          <div class="flex items-center gap-3"><span class="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-bold" style="background: var(--primary);">4</span>
+           <div>
+            <strong class="text-sm">Application Layer</strong> <span class="text-xs" style="color: #666;">— Dashboards, alerts, automated responses presented to users</span>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div><!-- Automation -->
+       <div class="mb-8">
+        <h3 class="font-bold text-xl mb-3 flex items-center gap-2" style="color: var(--primary);"><span class="text-2xl">⚙️</span> Automation</h3>
+        <p class="mb-4 text-sm leading-relaxed" style="color: #555;">Automation uses technology to perform tasks with minimal human intervention. It ranges from simple rule-based scripts to intelligent autonomous systems.</p>
+        <div class="grid md:grid-cols-2 gap-3">
+         <div class="p-4 rounded-lg border" style="border-color: #e5e0d8;">
+          <p class="font-bold text-sm mb-1">Robotic Process Automation (RPA)</p>
+          <p class="text-xs" style="color: #666;">Software bots mimic human actions — filling forms, copying data, processing invoices. Tools: UiPath, Automation Anywhere, Blue Prism.</p>
+         </div>
+         <div class="p-4 rounded-lg border" style="border-color: #e5e0d8;">
+          <p class="font-bold text-sm mb-1">Intelligent Automation (IA)</p>
+          <p class="text-xs" style="color: #666;">Combines RPA with AI/ML for complex decisions. Handles unstructured data, adapts to exceptions, and continuously improves.</p>
+         </div>
+        </div>
+       </div><!-- Big Data -->
+       <div class="mb-4">
+        <h3 class="font-bold text-xl mb-3 flex items-center gap-2" style="color: var(--primary);"><span class="text-2xl">📊</span> Big Data Systems</h3>
+        <p class="mb-4 text-sm leading-relaxed" style="color: #555;">Big Data refers to extremely large, complex datasets that traditional software cannot process efficiently. Characterized by the <strong>5 V's</strong>:</p>
+        <div class="flex flex-wrap gap-2 mb-4"><span class="px-3 py-1.5 rounded-full text-xs font-bold text-white" style="background: var(--primary);">Volume — Scale of data</span> <span class="px-3 py-1.5 rounded-full text-xs font-bold text-white" style="background: var(--primary);">Velocity — Speed of generation</span> <span class="px-3 py-1.5 rounded-full text-xs font-bold text-white" style="background: var(--primary);">Variety — Different formats</span> <span class="px-3 py-1.5 rounded-full text-xs font-bold text-white" style="background: #7a6520;">Veracity — Data quality</span> <span class="px-3 py-1.5 rounded-full text-xs font-bold text-white" style="background: #7a6520;">Value — Business insight</span>
+        </div>
+        <p class="text-sm" style="color: #555;"><strong>Key technologies:</strong> Hadoop, Apache Spark, NoSQL databases (MongoDB, Cassandra), data lakes, cloud data warehouses (Snowflake, BigQuery).</p>
+       </div>
+       <div class="mt-6 p-5 rounded-xl" style="background: linear-gradient(135deg, #f0f7fb, #fdf8ef);">
+        <h4 class="font-bold mb-2" style="color: var(--secondary);">💡 How They Connect</h4>
+        <p class="text-sm" style="color: #555;"><strong>IoT devices</strong> generate massive streams of data → <strong>Big Data systems</strong> store and process it → <strong>AI</strong> finds patterns and makes predictions → <strong>Automation</strong> acts on those predictions in real-time. Example: Smart factory sensors detect vibration anomalies, AI predicts machine failure, automation triggers a maintenance order — all without human involvement.</p>
+       </div>
+      </div>
+     </section><!-- TAB 2: ERP, CRM, SCM -->
+     <section id="tab-2" class="tab-content hidden fade-up delay-2">
+      <div class="rounded-2xl p-6 md:p-10 mb-6" style="background: var(--surface);">
+       <h2 class="heading-font text-2xl md:text-3xl font-700 mb-2" style="color: var(--primary);">ERP, CRM, SCM &amp; System Integration</h2>
+       <p class="mb-6 leading-relaxed" style="color: #555;">Enterprise systems are large-scale software suites that manage core business processes. They serve as the digital backbone of organizations.</p><!-- ERP -->
+       <div class="mb-8 p-5 rounded-xl border-l-4" style="border-color: var(--primary); background: #f8fbfd;">
+        <h3 class="font-bold text-lg mb-2" style="color: var(--primary);">🏭 Enterprise Resource Planning (ERP)</h3>
+        <p class="text-sm mb-3" style="color: #555;">An integrated system that manages <strong>all core business operations</strong> through a single database. Unifies finance, HR, manufacturing, procurement, and inventory.</p>
+        <div class="grid md:grid-cols-2 gap-3 mb-3">
+         <div>
+          <p class="font-semibold text-sm mb-1">Core Modules:</p>
+          <ul class="text-xs space-y-1" style="color: #666;">
+           <li>• <strong>Financial Management</strong> — GL, AP/AR, budgeting</li>
+           <li>• <strong>Human Capital Management</strong> — Payroll, recruitment, performance</li>
+           <li>• <strong>Manufacturing</strong> — Production planning, shop floor control</li>
+           <li>• <strong>Procurement</strong> — Purchase orders, vendor management</li>
+           <li>• <strong>Inventory &amp; Warehouse</strong> — Stock levels, logistics</li>
+          </ul>
+         </div>
+         <div>
+          <p class="font-semibold text-sm mb-1">Leading Vendors:</p>
+          <ul class="text-xs space-y-1" style="color: #666;">
+           <li>• <strong>SAP S/4HANA</strong> — Global market leader</li>
+           <li>• <strong>Oracle ERP Cloud</strong> — Strong in finance</li>
+           <li>• <strong>Microsoft Dynamics 365</strong> — Mid-market favorite</li>
+           <li>• <strong>Odoo</strong> — Open-source, popular in PH SMEs</li>
+           <li>• <strong>NetSuite</strong> — Cloud-native for growing businesses</li>
+          </ul>
+         </div>
+        </div>
+        <p class="text-xs p-2 rounded" style="background: #e8f4ea; color: #2d6a3f;"><strong>Benefit:</strong> Eliminates data silos — when a sale is made, inventory, accounting, and shipping are updated simultaneously.</p>
+       </div><!-- CRM -->
+       <div class="mb-8 p-5 rounded-xl border-l-4" style="border-color: var(--secondary); background: #fdfaf2;">
+        <h3 class="font-bold text-lg mb-2" style="color: var(--secondary);">🤝 Customer Relationship Management (CRM)</h3>
+        <p class="text-sm mb-3" style="color: #555;">Manages all interactions with current and potential customers. Focuses on <strong>sales, marketing, and customer service</strong> to build lasting relationships.</p>
+        <div class="grid md:grid-cols-3 gap-3 mb-3">
+         <div class="p-3 rounded-lg" style="background: #fff8e7;">
+          <p class="font-bold text-xs" style="color: var(--secondary);">Sales Automation</p>
+          <p class="text-xs mt-1" style="color: #666;">Lead tracking, pipeline management, forecasting, quote generation.</p>
+         </div>
+         <div class="p-3 rounded-lg" style="background: #fff8e7;">
+          <p class="font-bold text-xs" style="color: var(--secondary);">Marketing Automation</p>
+          <p class="text-xs mt-1" style="color: #666;">Email campaigns, customer segmentation, social media tracking, analytics.</p>
+         </div>
+         <div class="p-3 rounded-lg" style="background: #fff8e7;">
+          <p class="font-bold text-xs" style="color: var(--secondary);">Service &amp; Support</p>
+          <p class="text-xs mt-1" style="color: #666;">Ticketing systems, knowledge bases, chatbots, customer portals.</p>
+         </div>
+        </div>
+        <p class="text-xs" style="color: #666;"><strong>Top CRMs:</strong> Salesforce, HubSpot, Zoho CRM, Freshsales, Microsoft Dynamics 365 Sales.</p>
+       </div><!-- SCM -->
+       <div class="mb-8 p-5 rounded-xl border-l-4" style="border-color: #2d6a3f; background: #f4faf6;">
+        <h3 class="font-bold text-lg mb-2" style="color: #2d6a3f;">🚚 Supply Chain Management (SCM)</h3>
+        <p class="text-sm mb-3" style="color: #555;">Oversees the entire flow of goods, information, and finances from <strong>raw materials to final delivery</strong>. Aims to optimize cost, speed, and reliability.</p>
+        <div class="p-4 rounded-lg border mb-3" style="border-color: #d1e7dd;">
+         <p class="font-semibold text-sm mb-2" style="color: #2d6a3f;">The SCM Lifecycle</p>
+         <div class="flex flex-wrap items-center gap-1 text-xs font-semibold"><span class="px-2 py-1 rounded" style="background: #d1e7dd;">Plan</span> <span style="color: #999;">→</span> <span class="px-2 py-1 rounded" style="background: #d1e7dd;">Source</span> <span style="color: #999;">→</span> <span class="px-2 py-1 rounded" style="background: #d1e7dd;">Make</span> <span style="color: #999;">→</span> <span class="px-2 py-1 rounded" style="background: #d1e7dd;">Deliver</span> <span style="color: #999;">→</span> <span class="px-2 py-1 rounded" style="background: #d1e7dd;">Return</span>
+         </div>
+        </div>
+        <p class="text-xs" style="color: #666;"><strong>Key components:</strong> Demand forecasting, procurement, logistics, warehouse management, last-mile delivery. <strong>Tools:</strong> SAP SCM, Oracle SCM Cloud, Blue Yonder.</p>
+       </div><!-- System Integration -->
+       <div class="mb-4">
+        <h3 class="font-bold text-lg mb-3" style="color: var(--primary);">🔗 System Integration</h3>
+        <p class="text-sm mb-4" style="color: #555;">System integration connects different IT systems and software applications so they function as a coordinated whole. It's critical because most organizations use dozens of different systems.</p>
+        <div class="grid md:grid-cols-2 gap-3">
+         <div class="card-hover p-4 rounded-lg border" style="border-color: #e5e0d8;">
+          <p class="font-bold text-sm mb-1">API Integration</p>
+          <p class="text-xs" style="color: #666;">RESTful APIs and webhooks allow real-time data exchange between systems. Most modern and flexible approach.</p>
+         </div>
+         <div class="card-hover p-4 rounded-lg border" style="border-color: #e5e0d8;">
+          <p class="font-bold text-sm mb-1">Middleware / ESB</p>
+          <p class="text-xs" style="color: #666;">Enterprise Service Bus acts as a translator between systems with different protocols. Used in legacy environments.</p>
+         </div>
+         <div class="card-hover p-4 rounded-lg border" style="border-color: #e5e0d8;">
+          <p class="font-bold text-sm mb-1">iPaaS</p>
+          <p class="text-xs" style="color: #666;">Integration Platform as a Service (Zapier, MuleSoft) provides cloud-based pre-built connectors for rapid integration.</p>
+         </div>
+         <div class="card-hover p-4 rounded-lg border" style="border-color: #e5e0d8;">
+          <p class="font-bold text-sm mb-1">Data Integration / ETL</p>
+          <p class="text-xs" style="color: #666;">Extract, Transform, Load processes move and harmonize data between databases and data warehouses.</p>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- TAB 3: PH ICT Context -->
+     <section id="tab-3" class="tab-content hidden fade-up delay-2">
+      <div class="rounded-2xl p-6 md:p-10 mb-6" style="background: var(--surface);">
+       <h2 class="heading-font text-2xl md:text-3xl font-700 mb-2" style="color: var(--primary);">IS in Industry Sectors &amp; the Philippine ICT Context</h2><!-- IS in Industry -->
+       <div class="mb-8">
+        <h3 class="font-bold text-lg mb-3" style="color: var(--primary);">IS Across Industry Sectors</h3>
+        <div class="space-y-3">
+         <div class="p-4 rounded-lg" style="background: #f0f7fb;">
+          <p class="font-bold text-sm">🏥 Healthcare</p>
+          <p class="text-xs mt-1" style="color: #555;">Electronic Health Records (EHR), telemedicine platforms, hospital information systems (HIS), medical imaging AI, pharmacy management. In PH: PhilHealth e-claims, DOH disease surveillance system.</p>
+         </div>
+         <div class="p-4 rounded-lg" style="background: #fdf8ef;">
+          <p class="font-bold text-sm">🏦 Banking &amp; Finance</p>
+          <p class="text-xs mt-1" style="color: #555;">Core banking systems, mobile banking apps, anti-money laundering AI, algorithmic trading, blockchain. In PH: GCash, Maya (PayMaya), InstaPay, PESONet digital payment infrastructure.</p>
+         </div>
+         <div class="p-4 rounded-lg" style="background: #f4faf6;">
+          <p class="font-bold text-sm">🛒 Retail &amp; E-Commerce</p>
+          <p class="text-xs mt-1" style="color: #555;">POS systems, inventory management, recommendation engines, omnichannel platforms. In PH: Lazada, Shopee dominate; local players like Zalora PH. Growing social commerce via FB and TikTok Shop.</p>
+         </div>
+         <div class="p-4 rounded-lg" style="background: #fef2f2;">
+          <p class="font-bold text-sm">🎓 Education</p>
+          <p class="text-xs mt-1" style="color: #555;">Learning Management Systems (Canvas, Moodle), student information systems, EdTech platforms. In PH: DepEd Commons, DepEd LMS, widespread use of Google Classroom during and after pandemic.</p>
+         </div>
+         <div class="p-4 rounded-lg" style="background: #f5f0ff;">
+          <p class="font-bold text-sm">🏛️ Government</p>
+          <p class="text-xs mt-1" style="color: #555;">E-government portals, digital ID systems, tax filing, public records. In PH: PhilSys (National ID), eBIR (tax), eTravel, DICT-led digitalization initiatives.</p>
+         </div>
+        </div>
+       </div><!-- PH ICT Landscape -->
+       <div class="mb-6">
+        <h3 class="font-bold text-xl mb-4 flex items-center gap-2" style="color: var(--secondary);">🇵🇭 The Philippine ICT Landscape</h3>
+        <div class="p-5 rounded-xl mb-4" style="background: linear-gradient(135deg, #0F5078, #0a3a58); color: white;">
+         <p class="font-bold text-lg mb-2">Key Facts</p>
+         <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div class="text-center">
+           <p class="text-2xl font-bold" style="color: var(--secondary);">$29B+</p>
+           <p class="text-xs opacity-80">IT-BPM Revenue (2023)</p>
+          </div>
+          <div class="text-center">
+           <p class="text-2xl font-bold" style="color: var(--secondary);">1.7M+</p>
+           <p class="text-xs opacity-80">IT-BPM Workers</p>
+          </div>
+          <div class="text-center">
+           <p class="text-2xl font-bold" style="color: var(--secondary);">#1</p>
+           <p class="text-xs opacity-80">Voice BPO Globally</p>
+          </div>
+          <div class="text-center">
+           <p class="text-2xl font-bold" style="color: var(--secondary);">85M+</p>
+           <p class="text-xs opacity-80">Internet Users</p>
+          </div>
+         </div>
+        </div>
+        <div class="space-y-2">
+         <div class="accordion border rounded-lg" style="border-color: #e5e0d8;"><button class="accordion-btn w-full flex justify-between items-center p-4 text-left font-semibold text-sm" onclick="toggleAccordion(this)"> 📞 IT-BPM Industry (The Flagship Sector) <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i> </button>
+          <div class="accordion-content px-4 pb-4 text-sm" style="color: #555;">
+           <p>The Philippines is the world's #1 destination for voice-based BPO and a top-3 for IT-BPM overall. Major players include Accenture, Concentrix, Telus International, and Taskus. The industry is evolving from voice services toward higher-value services: software development, data analytics, AI training, and healthcare information management. IBPAP (IT &amp; Business Process Association of PH) leads industry development with the Digital Cities 2025 program expanding operations beyond Metro Manila to cities like Iloilo, Davao, Cebu, and Clark.</p>
+          </div>
+         </div>
+         <div class="accordion border rounded-lg" style="border-color: #e5e0d8;"><button class="accordion-btn w-full flex justify-between items-center p-4 text-left font-semibold text-sm" onclick="toggleAccordion(this)"> 🏛️ DICT &amp; Government ICT Initiatives <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i> </button>
+          <div class="accordion-content px-4 pb-4 text-sm" style="color: #555;">
+           <p>The Department of Information and Communications Technology (DICT) was established in 2016 (RA 10844) to plan, promote, and develop the ICT sector. Key programs: <strong>National Broadband Program</strong> — government-owned fiber backbone; <strong>Free WiFi in Public Places</strong>; <strong>Philippine National ID (PhilSys)</strong> — digital identity for all citizens; <strong>eGovernment Master Plan</strong> — digitizing government services; <strong>National Cybersecurity Plan</strong> — protecting critical infrastructure.</p>
+          </div>
+         </div>
+         <div class="accordion border rounded-lg" style="border-color: #e5e0d8;"><button class="accordion-btn w-full flex justify-between items-center p-4 text-left font-semibold text-sm" onclick="toggleAccordion(this)"> 💰 Fintech &amp; Digital Payments Revolution <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i> </button>
+          <div class="accordion-content px-4 pb-4 text-sm" style="color: #555;">
+           <p>The BSP (Bangko Sentral ng Pilipinas) targets 50% digital payments by 2023 and 70% financial inclusion. <strong>GCash</strong> (by Mynt/Globe) has 90M+ users — the dominant e-wallet. <strong>Maya</strong> (formerly PayMaya) offers banking + payments. <strong>InstaPay</strong> and <strong>PESONet</strong> enable real-time and batch interbank transfers. Digital banks like Tonik, Maya Bank, GoTyme, and UNObank are fully licensed. The Philippines is a global leader in crypto adoption and play-to-earn gaming (Axie Infinity originated here).</p>
+          </div>
+         </div>
+         <div class="accordion border rounded-lg" style="border-color: #e5e0d8;"><button class="accordion-btn w-full flex justify-between items-center p-4 text-left font-semibold text-sm" onclick="toggleAccordion(this)"> 🚧 Challenges &amp; Opportunities <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i> </button>
+          <div class="accordion-content px-4 pb-4 text-sm" style="color: #555;">
+           <p><strong>Challenges:</strong> Slow/expensive internet (improving with Dito, Converge, Starlink entry); digital divide between urban and rural areas; cybersecurity threats; brain drain of tech talent abroad; infrastructure gaps in provinces.</p>
+           <p class="mt-2"><strong>Opportunities:</strong> Young, tech-savvy population (median age ~25); high English proficiency; growing startup ecosystem (QBO, Ideaspace, Kickstart); government push for digital transformation; strategic location in ASEAN; expanding freelancer economy (PH is a top country on Upwork/Fiverr).</p>
+          </div>
+         </div>
+         <div class="accordion border rounded-lg" style="border-color: #e5e0d8;"><button class="accordion-btn w-full flex justify-between items-center p-4 text-left font-semibold text-sm" onclick="toggleAccordion(this)"> 📜 Key Philippine ICT Laws &amp; Regulations <i data-lucide="chevron-down" class="w-4 h-4 transition-transform"></i> </button>
+          <div class="accordion-content px-4 pb-4 text-sm" style="color: #555;">
+           <ul class="space-y-1">
+            <li>• <strong>RA 10173</strong> — Data Privacy Act of 2012 (NPC enforcement)</li>
+            <li>• <strong>RA 10175</strong> — Cybercrime Prevention Act of 2012</li>
+            <li>• <strong>RA 8792</strong> — E-Commerce Act of 2000</li>
+            <li>• <strong>RA 10844</strong> — DICT Act of 2016</li>
+            <li>• <strong>RA 11659</strong> — Public Services Act amendment (allows 100% foreign ownership in telcos)</li>
+            <li>• <strong>RA 11934</strong> — SIM Registration Act of 2022</li>
+           </ul>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </section><!-- TAB 4: Quiz -->
+     <section id="tab-4" class="tab-content hidden fade-up delay-2">
+      <div class="rounded-2xl p-6 md:p-10 mb-6" style="background: var(--surface);">
+       <h2 class="heading-font text-2xl md:text-3xl font-700 mb-2" style="color: var(--primary);">Knowledge Check</h2>
+       <p class="mb-6" style="color: #555;">Test your understanding of the lesson. Select the best answer for each question.</p>
+       <div id="quizContainer"></div>
+       <div id="quizResults" class="hidden mt-6 p-6 rounded-xl text-center" style="background: linear-gradient(135deg, #f0f7fb, #fdf8ef);">
+        <p class="text-4xl mb-2" id="resultEmoji">🎉</p>
+        <p class="text-2xl font-bold heading-font" id="resultScore" style="color: var(--primary);"></p>
+        <p class="text-sm mt-1" id="resultMsg" style="color: #555;"></p><button onclick="resetQuiz()" class="mt-4 px-6 py-2 rounded-full text-sm font-bold text-white" style="background: var(--primary);">Retake Quiz</button>
+       </div>
+      </div>
+     </section>
+    </div>
+   </main>
+   <footer class="w-full text-center py-6 text-xs" style="color: #999;">
+    Modern Information Systems — Interactive Lesson
+   </footer>
+  </div>
+  <script>
+  // Quiz data
+  const quizData = [
+    {
+      q: "Which groupware category best describes email communication between team members in different time zones?",
+      opts: ["Same time, same place", "Same time, different place", "Different time, same place", "Different time, different place"],
+      ans: 3
+    },
+    {
+      q: "What does the 'V' in the 5 V's of Big Data that refers to data trustworthiness?",
+      opts: ["Volume", "Velocity", "Veracity", "Value"],
+      ans: 2
+    },
+    {
+      q: "Which enterprise system primarily manages the flow of goods from raw materials to customer delivery?",
+      opts: ["ERP", "CRM", "SCM", "HRM"],
+      ans: 2
+    },
+    {
+      q: "RPA (Robotic Process Automation) is best described as:",
+      opts: ["Physical robots in factories", "Software bots that mimic human actions on computers", "AI systems that replace all workers", "Hardware automation for manufacturing"],
+      ans: 1
+    },
+    {
+      q: "Which Philippine law governs data privacy and protection?",
+      opts: ["RA 10175", "RA 8792", "RA 10173", "RA 10844"],
+      ans: 2
+    },
+    {
+      q: "GCash is an example of a Philippine innovation in which sector?",
+      opts: ["Healthcare IS", "Supply Chain Management", "Fintech & Digital Payments", "E-Government"],
+      ans: 2
+    },
+    {
+      q: "In IoT architecture, which layer contains sensors and actuators?",
+      opts: ["Application Layer", "Network Layer", "Processing Layer", "Perception Layer"],
+      ans: 3
+    },
+    {
+      q: "What is the primary benefit of ERP system integration?",
+      opts: ["Cheaper hardware", "Eliminates data silos across departments", "Replaces all employees", "Faster internet connection"],
+      ans: 1
+    },
+    {
+      q: "DICT stands for:",
+      opts: ["Digital Infrastructure for Communications Technology", "Department of Information and Communications Technology", "Division of Internet and Computer Technology", "Department of Integrated Computing Technology"],
+      ans: 1
+    },
+    {
+      q: "Which CRM function involves tracking sales leads through a pipeline?",
+      opts: ["Service & Support", "Marketing Automation", "Sales Automation", "Knowledge Management"],
+      ans: 2
+    }
+  ];
+
+  let quizAnswered = [];
+  let currentTab = 0;
+
+  // Build quiz
+  function buildQuiz() {
+    const container = document.getElementById('quizContainer');
+    container.innerHTML = '';
+    quizAnswered = new Array(quizData.length).fill(-1);
+
+    quizData.forEach((item, qi) => {
+      const div = document.createElement('div');
+      div.className = 'mb-6 p-5 rounded-xl border';
+      div.style.borderColor = '#e5e0d8';
+      div.id = `quiz-q-${qi}`;
+      div.innerHTML = `
+        <p class="font-bold text-sm mb-3"><span style="color: var(--primary);">Q${qi + 1}.</span> ${item.q}</p>
+        <div class="space-y-2">
+          ${item.opts.map((opt, oi) => `
+            <div class="quiz-option p-3 rounded-lg border text-sm" style="border-color: #e5e0d8;" data-q="${qi}" data-o="${oi}" onclick="selectAnswer(${qi}, ${oi}, this)">
+              <span class="font-semibold mr-2" style="color: var(--primary);">${String.fromCharCode(65 + oi)}.</span> ${opt}
+            </div>
+          `).join('')}
+        </div>
+        <p class="text-xs mt-2 hidden" id="feedback-${qi}"></p>
+      `;
+      container.appendChild(div);
+    });
+
+    // Submit button
+    const btn = document.createElement('button');
+    btn.id = 'submitQuiz';
+    btn.className = 'w-full py-3 rounded-full font-bold text-white text-sm mt-4';
+    btn.style.background = 'var(--primary)';
+    btn.textContent = 'Submit Answers';
+    btn.onclick = submitQuiz;
+    container.appendChild(btn);
+  }
+
+  function selectAnswer(qi, oi, el) {
+    // Remove previous selection
+    document.querySelectorAll(`[data-q="${qi}"]`).forEach(opt => {
+      opt.style.borderColor = '#e5e0d8';
+      opt.style.background = '';
+    });
+    el.style.borderColor = 'var(--primary)';
+    el.style.background = 'rgba(15,80,120,0.06)';
+    quizAnswered[qi] = oi;
+  }
+
+  function submitQuiz() {
+    let score = 0;
+    quizData.forEach((item, qi) => {
+      const opts = document.querySelectorAll(`[data-q="${qi}"]`);
+      const feedback = document.getElementById(`feedback-${qi}`);
+      opts.forEach((opt, oi) => {
+        opt.onclick = null;
+        opt.style.cursor = 'default';
+        if (oi === item.ans) {
+          opt.classList.add('correct');
+          opt.style.borderColor = '#16a34a';
+          opt.style.background = '#f0fdf4';
+        } else if (oi === quizAnswered[qi] && oi !== item.ans) {
+          opt.classList.add('wrong');
+          opt.style.borderColor = '#dc2626';
+          opt.style.background = '#fef2f2';
+        }
+      });
+      if (quizAnswered[qi] === item.ans) {
+        score++;
+        feedback.textContent = '✅ Correct!';
+        feedback.style.color = '#16a34a';
+      } else {
+        feedback.textContent = `❌ Correct answer: ${String.fromCharCode(65 + item.ans)}. ${item.opts[item.ans]}`;
+        feedback.style.color = '#dc2626';
+      }
+      feedback.classList.remove('hidden');
+    });
+
+    document.getElementById('submitQuiz').classList.add('hidden');
+    const results = document.getElementById('quizResults');
+    results.classList.remove('hidden');
+    document.getElementById('resultScore').textContent = `${score} / ${quizData.length}`;
+    const pct = Math.round((score / quizData.length) * 100);
+    if (pct >= 80) {
+      document.getElementById('resultEmoji').textContent = '🎉';
+      document.getElementById('resultMsg').textContent = `Excellent! You scored ${pct}%. You have a strong grasp of the material.`;
+    } else if (pct >= 50) {
+      document.getElementById('resultEmoji').textContent = '👍';
+      document.getElementById('resultMsg').textContent = `Good effort! You scored ${pct}%. Review the topics you missed.`;
+    } else {
+      document.getElementById('resultEmoji').textContent = '📖';
+      document.getElementById('resultMsg').textContent = `You scored ${pct}%. Consider re-reading the lesson material.`;
+    }
+    updateProgress();
+  }
+
+  function resetQuiz() {
+    document.getElementById('quizResults').classList.add('hidden');
+    buildQuiz();
+  }
+
+  // Tabs
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabSections = document.querySelectorAll('.tab-content');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.dataset.tab);
+      currentTab = idx;
+      tabBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      tabSections.forEach((s, i) => {
+        s.classList.toggle('hidden', i !== idx);
+      });
+      updateProgress();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  // Accordion
+  function toggleAccordion(btn) {
+    const content = btn.nextElementSibling;
+    const icon = btn.querySelector('[data-lucide]');
+    content.classList.toggle('open');
+    if (icon) icon.style.transform = content.classList.contains('open') ? 'rotate(180deg)' : '';
+  }
+
+  // Progress tracking
+  const visited = new Set([0]);
+  function updateProgress() {
+    visited.add(currentTab);
+    const quizDone = !document.getElementById('quizResults').classList.contains('hidden');
+    let pct = Math.round((visited.size / 5) * (quizDone ? 100 : 80));
+    if (quizDone) pct = 100;
+    document.getElementById('progressBar').style.width = pct + '%';
+    document.getElementById('progressText').textContent = pct + '%';
+  }
+
+  // Element SDK
+  const defaultConfig = {
+    main_title: 'Modern Information Systems',
+    subtitle: 'Collaboration, AI & Automation, Enterprise Systems, and the Philippine ICT Landscape',
+    background_color: '#F4F1EB',
+    surface_color: '#FFFFFF',
+    text_color: '#1a2332',
+    primary_color: '#0F5078',
+    secondary_color: '#B8860B',
+    font_family: 'DM Sans',
+    font_size: 14
+  };
+
+  function applyConfig(config) {
+    const c = { ...defaultConfig, ...config };
+    document.documentElement.style.setProperty('--bg', c.background_color);
+    document.documentElement.style.setProperty('--surface', c.surface_color);
+    document.documentElement.style.setProperty('--text', c.text_color);
+    document.documentElement.style.setProperty('--primary', c.primary_color);
+    document.documentElement.style.setProperty('--secondary', c.secondary_color);
+    document.body.style.background = c.background_color;
+    document.body.style.color = c.text_color;
+
+    const font = c.font_family || defaultConfig.font_family;
+    document.body.style.fontFamily = `${font}, 'DM Sans', sans-serif`;
+
+    const sz = c.font_size || defaultConfig.font_size;
+    document.body.style.fontSize = sz + 'px';
+    document.querySelectorAll('.heading-font').forEach(el => {
+      el.style.fontFamily = `'Playfair Display', ${font}, Georgia, serif`;
+    });
+
+    document.getElementById('mainTitle').textContent = c.main_title;
+    document.getElementById('subtitle').textContent = c.subtitle;
+
+    // Recolor active tab
+    tabBtns.forEach(b => {
+      if (b.classList.contains('active')) {
+        b.style.background = c.primary_color;
+        b.style.color = '#fff';
+      } else {
+        b.style.background = '';
+        b.style.color = '';
+      }
+    });
+  }
+
+  if (window.elementSdk) {
+    window.elementSdk.init({
+      defaultConfig,
+      onConfigChange: async (config) => applyConfig(config),
+      mapToCapabilities: (config) => ({
+        recolorables: [
+          { get: () => config.background_color || defaultConfig.background_color, set: (v) => { config.background_color = v; window.elementSdk.setConfig({ background_color: v }); } },
+          { get: () => config.surface_color || defaultConfig.surface_color, set: (v) => { config.surface_color = v; window.elementSdk.setConfig({ surface_color: v }); } },
+          { get: () => config.text_color || defaultConfig.text_color, set: (v) => { config.text_color = v; window.elementSdk.setConfig({ text_color: v }); } },
+          { get: () => config.primary_color || defaultConfig.primary_color, set: (v) => { config.primary_color = v; window.elementSdk.setConfig({ primary_color: v }); } },
+          { get: () => config.secondary_color || defaultConfig.secondary_color, set: (v) => { config.secondary_color = v; window.elementSdk.setConfig({ secondary_color: v }); } }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: (v) => { config.font_family = v; window.elementSdk.setConfig({ font_family: v }); }
+        },
+        fontSizeable: {
+          get: () => config.font_size || defaultConfig.font_size,
+          set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); }
+        }
+      }),
+      mapToEditPanelValues: (config) => new Map([
+        ['main_title', config.main_title || defaultConfig.main_title],
+        ['subtitle', config.subtitle || defaultConfig.subtitle]
+      ])
+    });
+  }
+
+  // Init
+  buildQuiz();
+  lucide.createIcons();
+  updateProgress();
+</script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9edff58f5121fec7',t:'MTc3NjQ3NjQwMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
